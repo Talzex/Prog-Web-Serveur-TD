@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+}
+nav{
+    display: flex;
+    background-color:lightblue;
+    margin: 0;
+}
+ nav > a {
+     padding: 0 2rem;
+     text-decoration: none;
+     margin: 0;
+ }
+
+ 
