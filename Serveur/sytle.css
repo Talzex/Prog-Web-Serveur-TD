@@ -12,4 +12,8 @@ nav{
      margin: 0;
  }
 
+ nav > p {
+     padding: 0 1rem;
+ }
+
  
