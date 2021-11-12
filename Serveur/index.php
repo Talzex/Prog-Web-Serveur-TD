@@ -1,7 +1,8 @@
 <?php
 $pages = [
 1 => ["multiplications"],
-2 => ["calculatrice", "calendrier"]
+2 => ["calculatrice", "calendrier"],
+3 => ["BDD"]
 ]
 ?>
 <!DOCTYPE html>
