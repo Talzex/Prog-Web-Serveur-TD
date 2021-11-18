@@ -3,6 +3,7 @@ $pages = [
 1 => ["multiplications"],
 2 => ["calculatrice", "calendrier"],
 3 => ["BDD"]
+4 => ["user"]
 ]
 ?>
 <!DOCTYPE html>
