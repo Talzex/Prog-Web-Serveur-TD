@@ -31,8 +31,6 @@ $pdo->query('SET CHARSET UTF8');
             while($saisons = $req->fetch()){
                 echo "<li>Saison ".$saisons[0]. "(" .$saisons[1]. " épisodes )</li>";
             }
-            
-            
         }
         ?>
     </ul>

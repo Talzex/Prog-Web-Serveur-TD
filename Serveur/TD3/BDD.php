@@ -13,7 +13,7 @@ $pdo->query('SET CHARSET UTF8');
     <title>Base de données</title>
 </head>
 
-<body>
+<body style="background-color : black;">
     <!--<?php
     $sql = "SELECT title FROM series WHERE title LIKE 'L%' ";
     $query = $pdo->query($sql);
@@ -21,33 +21,52 @@ $pdo->query('SET CHARSET UTF8');
         echo 'Nom : ' . $row['title'] . "<br>";
     }
     ?>-->
-
     <form method="POST" action="result_form.php">
         <input type="text"  placeholder = "Nom de la série"name="nom" required >
         <input type="submit" value="send">
     </form>
-
     <?php 
     class Series
     {
     }
+    $parPage = 12;
 
-    $sql = $pdo->query("SELECT * FROM series LIMIT 15");
-    $sql->setFetchMode(PDO::FETCH_CLASS, Series::class);
-    while($row =  $sql->fetch()){ ?>
-        <div style="display: flex;flex-wrap:wrap;">
-            <p><?= $row->title ?></p><br>
-            <img style="width: 200px;" src='poster.php?id=<?= $row->id ?>'>
-        </div>
+    if(isset($_GET['page'])){
+        if($_GET['page'] > 0 && $_GET['page'] < 19){
+            $currentPage = (int) strip_tags($_GET['page']);
+        } else {
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
+        }
         
-        
-        
-    <?php }
+    }else{
+        $currentPage = 1;
+    }
+    $limit = $pdo->prepare("SELECT * FROM series LIMIT :premier, :parpage");
+    $limit->bindValue(':premier', ($currentPage - 1)* $parPage, PDO::PARAM_INT);
+    $limit->bindValue(':parpage', $parPage, PDO::PARAM_INT);
+    $limit->execute();
+    $limit->setFetchMode(PDO::FETCH_CLASS, Series::class);
+    
     ?>
-
-
-
-
+    <ul style="display : flex; justify-content : space-between;">
+    <li>
+            <a style="color:white; text-decoration:none; font-weight:bold;" href="BDD.php?page=<?= $currentPage - 1 ?>">Précédente</a>
+    </li>
+        <li>
+            <a style="color:white; text-decoration:none; font-weight:bold;" href="BDD.php?page=<?= $currentPage + 1 ?>" >Suivante</a>
+        </li>
+    </ul>
+    <div style="display:flex; flex-wrap:wrap;  justify-content : space-between; ">
+    <?php while($row =  $limit->fetch()){ ?>
+        
+            <div style="text-align : center; margin : 1rem; background-color: #424242; color: white;">
+                <img style="width: 200px; height: 300px; border: solid 5px #272322; border-radius : 2%" src='poster.php?id=<?= $row->id ?>'>
+                <p><?= $row->title ?></p><br>
+            </div>
+    <?php
+    }
+    ?>
+    </div>
 </body>
 
 </html>
