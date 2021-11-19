@@ -21,7 +21,9 @@ session_start();
 </form>
 
 <?php
-
+    if (isset($_SESSION['name'])) {
+        header('location: connecte.php');
+    } 
     if (isset($_POST['nom']) && isset($_POST['mdp'])) {
         $nom = $_POST['nom'];
         $mdp = sha1($_POST['mdp']);
@@ -33,7 +35,7 @@ session_start();
             $sql->execute([$nom,$mdp]);
             $result = $sql->rowCount();
             if($result != 0){ 
-                $_SESSION['name'] = $sql['name'];
+                $_SESSION['name'] = $nom;
                 header('location: connecte.php');
             }
         }
