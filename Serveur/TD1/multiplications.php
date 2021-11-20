@@ -1,11 +1,13 @@
+<?php
+$title = 'Inscription';
+include('../head.php');
+include('../navbar.php');
+if (!isset($_SESSION['id'])) {
+    header('location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Multiplications</title>
-</head>
-
 <body>
     <?php
     $nb = 9;

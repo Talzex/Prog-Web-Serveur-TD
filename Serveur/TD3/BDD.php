@@ -1,12 +1,10 @@
 <?php
-$dsn = "mysql:dbname=etu_tduthil;host=info-titania";
-$user = 'tduthil';
-$password = 'fVcFs7p3';
-$pdo = new PDO($dsn, $user, $password);
-$pdo->query('SET CHARSET UTF8');
-session_start();
-if (!isset($_SESSION['name'])) {
-    header('location: /TD5/site.php');
+include('../bdd_path.php');
+$title = 'Séries';
+include('../head.php');
+include('../navbar.php');
+if (!isset($_SESSION['id'])) {
+    header('location: ../index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -26,8 +24,8 @@ if (!isset($_SESSION['name'])) {
         }
         ?>-->
     <form method="POST" action="result_form.php">
-        <input type="text" placeholder="Nom de la série" name="nom" required>
-        <input type="submit" value="send">
+        <input type="text" class="form-control" placeholder="Nom de la série" name="nom" required>
+        <input type="submit" class="btn btn-primary" value="send">
     </form>
     <?php
     class Series
@@ -49,7 +47,6 @@ if (!isset($_SESSION['name'])) {
     $limit->bindValue(':parpage', $parPage, PDO::PARAM_INT);
     $limit->execute();
     $limit->setFetchMode(PDO::FETCH_CLASS, Series::class); ?>
-    <a href="/TD5/logout.php" style="color:white; text-decoration:none; font-weight:bold;">Déconnexion</a>
     <ul style="display : flex; justify-content : space-between;">
         <li>
             <a style="color:white; text-decoration:none; font-weight:bold;" href="BDD.php?page=<?= $currentPage - 1 ?>">Précédente</a>
@@ -59,12 +56,29 @@ if (!isset($_SESSION['name'])) {
         </li>
     </ul>
     <div style="display:flex; flex-wrap:wrap;  justify-content : space-between; ">
-        <?php while ($row =  $limit->fetch()) { ?>
 
-            <div style="text-align : center; margin : 1rem; background-color: #424242; color: white;">
+        <?php if (isset($_SESSION['id'])) {
+            $user_id = $_SESSION['id'];
+            $sql = $pdo->query("SELECT series_id FROM user_series WHERE user_id = $user_id");
+            $sql->execute();
+            $serielike = $sql->fetchAll();
+        }
+        while ($row =  $limit->fetch()) {
+            $liked = false; ?>
+            <div id="<?= $row->id ?>" style="text-align : center; margin : 1rem; background-color: #424242; color: white;">
                 <img style="width: 200px; height: 300px; border: solid 5px #272322; border-radius : 2%" src='poster.php?id=<?= $row->id ?>'>
                 <p><?= $row->title ?></p><br>
-                <a href="/TD5/like.php?id=<?=$row->id?>"><img src="https://img.icons8.com/small/16/000000/hearts.png" style="width: 50px;"/></a>
+                <?php
+                foreach ($serielike as $sl) {
+                    if ($sl['series_id'] == $row->id) {
+                        $liked = true;
+                    }
+                }
+                if ($liked) { ?>
+                    <a href="/TD5/like.php?id=<?= $row->id ?>&like=1#<?= $row->id ?>"><img src="https://img.icons8.com/cotton/64/000000/hearts--v2.png" style="width: 50px;" /></a>
+                <?php } else { ?>
+                    <a href="/TD5/like.php?id=<?= $row->id ?>&like=0#<?= $row->id ?>"><img src="https://img.icons8.com/small/16/000000/hearts.png" style="width: 50px;" /></a>
+                <?php } ?>
             </div>
         <?php
         }

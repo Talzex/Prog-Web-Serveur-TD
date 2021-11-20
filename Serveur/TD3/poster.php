@@ -1,9 +1,5 @@
 <?php
-$dsn = "mysql:dbname=etu_tduthil;host=info-titania";
-$user = 'tduthil';
-$password = 'fVcFs7p3';
-$pdo = new PDO($dsn, $user, $password);
-$pdo->query('SET CHARSET UTF8');
+include('../bdd_path.php');
 
 header("Content-type: image/png");
 

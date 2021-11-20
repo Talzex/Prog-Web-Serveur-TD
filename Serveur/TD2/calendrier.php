@@ -1,10 +1,14 @@
+<?php
+include('../bdd_path.php');
+$title = 'Calendrier';
+include('../head.php');
+include('../navbar.php');
+if (!isset($_SESSION['id'])) {
+    header('location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Calendrier</title>
-</head>
 <?php
         $jour = date('d'); //numéro du jour dans le mois
         $mois = date('m'); // numéro du mois dans l'année

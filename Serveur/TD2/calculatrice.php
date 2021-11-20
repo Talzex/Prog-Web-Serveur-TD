@@ -1,11 +1,14 @@
+<?php
+include('../bdd_path.php');
+$title = 'Calculatrice';
+include('../head.php');
+include('../navbar.php');
+if (!isset($_SESSION['id'])) {
+    header('location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Calculatrice</title>
-</head>
-
 <body>
     <h1>Calculatrice GET</h1>
     <form method="GET">
