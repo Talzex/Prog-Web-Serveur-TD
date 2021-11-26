@@ -3,6 +3,9 @@ include('../bdd_path.php');
 $title = 'Inscription';
 include('../head.php');
 include('../navbar.php');
+if (isset($_SESSION['id'])) {
+    header('location: connecte.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,6 +30,7 @@ include('../navbar.php');
                 }
                 ?>
             </select>
+            <input type="text" placeholder="Autre..." name="otherCountry">
             <input type="submit" value="Créer un compte" class="m-3 btn btn-primary">
         </form>
     </div>

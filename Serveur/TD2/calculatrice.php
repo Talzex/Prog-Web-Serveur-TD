@@ -3,9 +3,7 @@ include('../bdd_path.php');
 $title = 'Calculatrice';
 include('../head.php');
 include('../navbar.php');
-if (!isset($_SESSION['id'])) {
-    header('location: ../index.php');
-}
+require_once('../pageprotegee.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">

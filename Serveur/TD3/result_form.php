@@ -1,13 +1,12 @@
 <?php
 include('../bdd_path.php');
+$title = 'Résultat Formulaire';
+include('../head.php');
+include('../navbar.php');
+require_once('../pageprotegee.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Requete Formulaire</title>
-</head>
 
 <body>
     <?php
